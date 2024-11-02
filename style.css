@@ -1,0 +1,144 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: aquamarine;
+}
+
+.overflow {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.801);
+    position: fixed;
+    top: 0;
+    display: none;
+    z-index: -10;
+}
+
+.pop-up{
+    padding: 30px 0;
+    margin: auto;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+    border-radius: 20px;
+    position: relative;
+}
+
+
+.book{
+    position: relative;
+    width: 350px;
+    height: 500px;
+    transition: transform 0.5s;
+}
+
+.button-close {
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    background-color: transparent;
+    padding: 2px;
+    border-radius: 20px;
+}
+
+.button-close:hover{
+    background-color: aliceblue;
+}
+
+.paper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    perspective: 1500px;
+}
+
+.front,.back{
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transition: transform 0.5s;
+}
+
+.front{
+    z-index: 1;
+    backface-visibility: hidden;
+    border-left: 3px solid rgb(178, 176, 176);
+}
+
+.back{
+    z-index: 0;
+}
+
+
+.front-content,
+.back-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-content {
+    transform: rotateY(180deg);
+}
+
+
+.flipped .front ,.flipped .back{
+    transform: rotateY(-180deg);
+}
+
+.w-svg{
+    width: 30px;
+}
+
+.buttons{
+    border: none;
+    margin: 10px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+.buttons:focus{
+    outline: none;
+}
+
+.icon-btn:hover{
+    opacity: 60%;
+}
+
+#p1{
+    z-index: 5;
+}
+
+#p2{
+    z-index: 4;
+}
+
+#p3{
+    z-index: 3;
+}
+
+#p3{
+    z-index: 2;
+}
+
+#p5{
+    z-index: 1;
+}
+
+.img-pdf{
+    width: 100%;
+    height: 100%;
+}
