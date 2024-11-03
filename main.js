@@ -1,146 +1,139 @@
-// const words = ['Hello', 'world','welcome','to','javaScript'];
-// const sentence = words.join(); // sentence برابر است با "Hello world"
+const pagesData = [
+  {
+    frontImg: './New folder/11zon_compressed/pdf (1).jpg',
+    backImg: './New folder/11zon_compressed/pdf (2).jpg',
+  },
+  {
+    frontImg: './New folder/11zon_compressed/pdf (3).jpg',
+    backImg: './New folder/11zon_compressed/pdf (4).jpg',
+  },
+  {
+    frontImg: './New folder/11zon_compressed/pdf (5).jpg',
+    backImg: './New folder/11zon_compressed/pdf (6).jpg',
+  },
+  {
+    frontImg: './New folder/11zon_compressed/pdf (7).jpg',
+    backImg: './New folder/11zon_compressed/pdf (8).jpg',
+  },
+  {
+    frontImg: './New folder/11zon_compressed/pdf (9).jpg',
+    backImg: './New folder/11zon_compressed/pdf (10).jpg',
+  },
+  // {
+  //   frontImg: './New folder/11zon_compressed/pdf (11).jpg',
+  //   backImg: './New folder/11zon_compressed/pdf (12).jpg',
+  // },
+  // {
+  //   frontImg: './New folder/11zon_compressed/pdf (13).jpg',
+  //   backImg: './New folder/11zon_compressed/pdf (14).jpg',
+  // },
+  // {
+  //   frontImg: './New folder/11zon_compressed/pdf (15).jpg',
+  //   backImg: './New folder/11zon_compressed/pdf (16).jpg',
+  // },
+];
 
-// console.log(sentence);
-
-// const numbers = [5, 2, 3, 4.6];
-// const sum = numbers.reduce((a, s) => a + s, 0); // sum برابر است با 10
-
-// console.log(sum);
-
-// const items = [1, 2, 3, 4,5];
-// items.splice(2,1, 'a', 'b'); // items برابر است با [1, 'a', 'b', 4]
-
-// console.log(items);
-
-// const letters = ['a', 'b','q', 'c','q','q'];
-// const position = letters.indexOf('q'); // position برابر است با 1
-
-// console.log(position);
-
-// const lettersTow = ['a', 'b','q', 'c','q','q'];
-// const positionTow = lettersTow.lastIndexOf('q'); // position برابر است با 1
-
-// console.log(positionTow);
-
-// const numbers = [5, 12, 8,22,32,21];
-// const found = numbers.find(num => num > 20); // found برابر است با 12
-// console.log(found);
-
-// const numbers = [5,4, 12, 8];
-// const index = numbers.findIndex(num => num > 10); // index برابر است با 1
-// console.log(index);
+const bookContainer = document.querySelector('#book');
 const prevBtn = document.querySelector('#prev-btn');
 const nextBtn = document.querySelector('#next-btn');
 const openBtn = document.querySelector('#open-btn');
 const closeBtn = document.querySelector('#button-close');
-const book = document.querySelector('#book');
 const pop_up = document.querySelector('.pop-up');
 const overflow = document.querySelector('#overflow');
 
-const paper1 = document.querySelector('#p1');
-const paper2 = document.querySelector('#p2');
-const paper3 = document.querySelector('#p3');
-const paper4 = document.querySelector('#p4');
-const paper5 = document.querySelector('#p5');
-
-prevBtn.addEventListener('click', goPrevPage);
-nextBtn.addEventListener('click', goNextPage);
-openBtn.addEventListener('click', openPopUp);
-closeBtn.addEventListener('click', closePopUp);
-overflow.addEventListener('click', closePopUp);
-
 let currentLocation = 1;
-let numOfPages = 5;
-let maxLocation = numOfPages + 1;
+const numOfPages = pagesData.length;
+const maxLocation = numOfPages + 1;
 
-function openBook() {
-  book.style.transform = 'translateX(50%)';
-  prevBtn.style.transform = 'translateX(-180px)';
-  nextBtn.style.transform = 'translateX(180px)';
-}
+pagesData.forEach((pageData, index) => {
+  const paper = document.createElement('div');
+  paper.classList.add('paper');
+  paper.id = `p${index + 1}`;
+  const front = document.createElement('div');
+  front.classList.add('front');
+  const frontContent = document.createElement('div');
+  frontContent.classList.add('front-content');
+  const frontImg = document.createElement('img');
+  frontImg.src = pageData.frontImg;
+  frontImg.classList.add('img-pdf');
+  frontContent.appendChild(frontImg);
+  front.appendChild(frontContent);
+  const back = document.createElement('div');
+  back.classList.add('back');
+  const backContent = document.createElement('div');
+  backContent.classList.add('back-content');
+  const backImg = document.createElement('img');
+  backImg.src = pageData.backImg;
+  backImg.classList.add('img-pdf');
+  backContent.appendChild(backImg);
+  back.appendChild(backContent);
+
+  paper.appendChild(front);
+  paper.appendChild(back);
+  bookContainer.appendChild(paper);
+});
+
 function openPopUp() {
   pop_up.style.display = 'flex';
   overflow.style.display = 'flex';
+  openBtn.style.display = 'none';
 }
 
 function closePopUp() {
   pop_up.style.display = 'none';
   overflow.style.display = 'none';
+  openBtn.style.display = 'flex';
+}
+
+function openBook() {
+  const translateValue =
+    window.innerWidth <= 576 ? 50 : window.innerWidth <= 850 ? 50 : 50;
+  const prevTranslate =
+    window.innerWidth <= 576 ? -65 : window.innerWidth <= 850 ? -175 : -205;
+  const nextTranslate =
+    window.innerWidth <= 576 ? 65 : window.innerWidth <= 850 ? 175 : 205;
+  bookContainer.style.transform = `translateX(${translateValue}%)`;
+  prevBtn.style.transform = `translateX(${prevTranslate}px)`;
+  nextBtn.style.transform = `translateX(${nextTranslate}px)`;
 }
 
 function closeBook(isAtBeginning) {
   if (isAtBeginning) {
-    book.style.transform = 'translateX(0%)';
+    bookContainer.style.transform = 'translateX(0%)';
   } else {
-    book.style.transform = 'translateX(100%)';
+    const translateValue = window.innerWidth <= 576 ? 108 : 105;
+    bookContainer.style.transform = `translateX(${translateValue}%)`;
   }
-  prevBtn.style.transform = 'translateX(0)';
-  nextBtn.style.transform = 'translateX(0)';
+  prevBtn.style.transform = 'translateX(-10px)';
+  nextBtn.style.transform = 'translateX(25px)';
 }
 
 function goNextPage() {
   if (currentLocation < maxLocation) {
-    switch (currentLocation) {
-      case 1:
-        openBook();
-        paper1.classList.add('flipped');
-        paper1.style.zIndex = 1;
-        break;
-      case 2:
-        paper2.classList.add('flipped');
-        paper2.style.zIndex = 2;
-        break;
-      case 3:
-        paper3.classList.add('flipped');
-        paper3.style.zIndex = 3;
-        break;
-      case 4:
-        paper4.classList.add('flipped');
-        paper4.style.zIndex = 4;
-        break;
-      case 5:
-        paper5.classList.add('flipped');
-        paper5.style.zIndex = 5;
-        closeBook(false); // فراخوانی با false برای بسته شدن کتاب
-        break;
-      default:
-        throw new Error('Unknown state');
-    }
+    const currentPaper = document.querySelector(`#p${currentLocation}`);
+    currentPaper.classList.add('flipped');
+    currentPaper.style.zIndex = currentLocation;
+
+    if (currentLocation === 1) openBook();
+    if (currentLocation === numOfPages) closeBook(false);
     currentLocation++;
   }
 }
 
 function goPrevPage() {
   if (currentLocation > 1) {
-    currentLocation--; // کاهش currentLocation
+    currentLocation--;
+    const currentPaper = document.querySelector(`#p${currentLocation}`);
+    currentPaper.classList.remove('flipped');
+    currentPaper.style.zIndex = numOfPages - currentLocation;
 
-    switch (currentLocation) {
-      case 1:
-        closeBook(true);
-        paper1.classList.remove('flipped');
-        paper1.style.zIndex = 5;
-        break;
-      case 2:
-        openBook(); // باز کردن کتاب در صفحه 2
-        paper2.classList.remove('flipped');
-        paper2.style.zIndex = 4;
-        break;
-      case 3:
-        paper3.classList.remove('flipped');
-        paper3.style.zIndex = 3;
-        break;
-      case 4:
-        paper4.classList.remove('flipped');
-        paper4.style.zIndex = 2;
-        break;
-      case 5:
-        openBook(); // باز کردن کتاب در صفحه 5
-        paper5.classList.remove('flipped');
-        paper5.style.zIndex = 1;
-        break;
-      default:
-        throw new Error('Unknown state');
-    }
+    if (currentLocation === 1) closeBook(true);
+    if (currentLocation === numOfPages) openBook();
   }
 }
+
+prevBtn.addEventListener('click', goPrevPage);
+nextBtn.addEventListener('click', goNextPage);
+openBtn.addEventListener('click', openPopUp);
+closeBtn.addEventListener('click', closePopUp);
+overflow.addEventListener('click', closePopUp);
